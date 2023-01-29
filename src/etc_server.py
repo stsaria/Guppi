@@ -1,5 +1,6 @@
 from urllib.request import Request, urlopen
 import urllib
+import subprocess
 
 # マインクラフトのバージョン別のダウンロードURLが書いている配列
 minecraft_download_link_list = [
@@ -16,10 +17,16 @@ minecraft_download_link_list = [
 ]
 
 # ファイルに書き込む関数
-def file_write(file, text):
+def write_file(file, text):
     f = open(file, 'w')
     f.write(text)
     f.close()
+
+def exec_java(dir_name, jar_name, xms, xmx, java_argument):
+    # もし入力内容が0かnotだったら1(1GB)に
+    mem = [xms, xmx]
+    cmd = "java -Xmx"+mem[1]+"G -Xms"+mem[0]+"G -jar "+jar_name+" "+java_argument
+    subprocess.call(cmd, shell=True, cwd=r""+dir_name+"/")
 
 # 続行・同意するか確認する関数
 def input_yes_no(text):
