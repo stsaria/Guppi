@@ -73,7 +73,8 @@ def input_server_info():
             continue
         else:
             break
-    server_add_or_one_more = input("作成方法を選んでください\nadd:すぐに作成する\nplural:もう一つ作成する\n（注意：未入力・それ以外の場合はaddになります）\n選択してください[A/p]：").lower()
+    # server_add_or_one_more = input("作成方法を選んでください\nadd:すぐに作成する\nplural:もう一つ作成する\n（注意：未入力・それ以外の場合はaddになります）\n選択してください[A/p]：").lower()
+    server_add_or_one_more = "add"
     if not name:
         name = "デフォルト（未入力）"
     if not port or not str.isnumeric(port):
@@ -93,7 +94,7 @@ def make():
     server_count = 1
     while True:
         server = InputInfoClass()
-        print(server_count,"個目")
+        # print(server_count,"個目")
         input_choice = input_server_info()
         server.name = input_choice[1]
         server.version = input_choice[2]
