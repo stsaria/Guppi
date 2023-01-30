@@ -2,11 +2,9 @@ from src import etc_server
 import configparser
 import sys
 import linecache
-import os
 
 ini = configparser.ConfigParser()
-path_ini = os.path.join(os.path.dirname(__file__), '../data/config.ini')
-ini.read(path_ini, 'UTF-8')
+ini.read('data/config.ini', 'UTF-8')
 
 def select_server():
     minecraft_server_list_txt_lines_count = sum([1 for _ in open('data/minecraft-list.txt', encoding="utf-8")])
@@ -49,7 +47,7 @@ def run():
     path = linecache.getline('data/minecraft-dir-list.txt', int(choice_lines)).replace('\n', '')
     print(path)
 
-    start_jar = ini[path.replace('/', '-')]['start_jar']
+    start_jar = ini.get(path.replace('/', '-'), 'start_jar')
     etc_server.exec_java(path, start_jar, mem_input[0], mem_input[1], "")
 
 def port():
@@ -86,7 +84,7 @@ def make_sh():
             if int(i) < 1:
                 continue
         break
-    start_jar = ini[path.replace('/', '-')]['start_jar']
+    start_jar = ini.get(path.replace('/', '-'), 'start_jar')
     file_name = ["start.sh", "start.bat"]
     for i in file_name:
         with open(path+"/"+i, 'w', encoding="utf-8") as f:
