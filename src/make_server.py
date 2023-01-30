@@ -188,6 +188,10 @@ def make():
     print("インストールが終わりました\n管理（Control）から実行できます。")
 
 if __name__ == "__main__":
+    # Q.FastServer?
+    # A.No. This is GuppiServer
+    # ?.Audio
+
     cmd_input = sys.argv
     if len(cmd_input) >= 2:
         if cmd_input[1] == "-fast-make":

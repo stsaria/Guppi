@@ -2,7 +2,7 @@ from src import make_server
 from src import control_server
 import sys
 
-version = "0.0.1-alpha"
+version = "Pre/0.0.2-alpha"
 codename = "Guppi"
 
 def run():

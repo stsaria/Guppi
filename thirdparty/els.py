@@ -26,8 +26,6 @@ if platform.system() == "Windows":
 def wait(time):
     Event().wait(int(time))
 
-
-
 def print_els(text_els, print_switch):
     if print_switch == "True":
         print(text_els)
