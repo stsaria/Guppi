@@ -20,9 +20,9 @@ def check():
     print("OK!")
     # pathの内容がなかったら作成する系
     print("File Check 1",end="")
-    path = ["data", "data/config.ini", "minecraft", "data/minecraft-list.txt", "data/minecraft-dir-list.txt"]
-    path_attribute = ["dir", "file", "dir", "file", "file"]
-    for i in range(5):
+    path = ["data", "minecraft", "data/minecraft-list.txt", "data/minecraft-dir-list.txt"]
+    path_attribute = ["dir", "dir", "file", "file"]
+    for i in range(4):
         print(".",end="")
         if not os.path.exists(path[i]):
             print("-Create-",end="")

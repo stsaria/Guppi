@@ -6,9 +6,6 @@ from src import etc_server
 import configparser
 import shutil
 
-ini = configparser.ConfigParser()
-ini.read('data/config.ini', 'UTF-8')
-
 new_version = "1.19.3"
 
 class InputInfoClass:
@@ -183,8 +180,8 @@ def make():
         with open('data/minecraft-dir-list.txt', 'a', encoding="utf-8") as f:
             print(const.minecraft_dir, file=f)
         # サーバーディレクトリに管理用iniファイルを作成
-        with open("data/config.ini", 'a', encoding="UTF-8") as f:
-            print("["+const.minecraft_dir.replace('/', '-')+"]\nversion = "+server.version+"\nmode_jar = "+server.attribute+"\nstart_jar = "+server.start_jar_file, file=f)
+        with open("data/"+const.minecraft_dir.replace('/', '-')+".txt", 'w', encoding="UTF-8") as f:
+            print(server.version+"\n"+server.attribute+"\n"+server.start_jar_file, file=f)
     print("インストールが終わりました\n管理（Control）から実行できます。")
 
 if __name__ == "__main__":
