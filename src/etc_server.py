@@ -25,7 +25,7 @@ def write_file(file, text):
 def exec_java(dir_name, jar_name, xms, xmx, java_argument):
     # もし入力内容が0かnotだったら1(1GB)に
     mem = [xms, xmx]
-    cmd = "java -Xmx"+mem[1]+"G -Xms"+mem[0]+"G -jar "+jar_name+" "+java_argument
+    cmd = "java -Xmx"+mem[1]+"G -Xms"+mem[0]+"G -jar "+jar_name+" --nogui "+java_argument
     subprocess.call(cmd, shell=True, cwd=r""+dir_name+"/")
 
 # 続行・同意するか確認する関数

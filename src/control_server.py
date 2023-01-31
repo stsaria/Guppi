@@ -84,7 +84,7 @@ def make_sh():
     file_name = ["start.sh", "start.bat"]
     for i in file_name:
         with open(path+"/"+i, 'w', encoding="utf-8") as f:
-            print("echo Start!\njava -Xms"+mem_input[0]+"G -Xmx"+mem_input[1]+"G -jar "+start_jar, file=f)
+            print("echo Start!\njava -Xms"+mem_input[0]+"G -Xmx"+mem_input[1]+"G -jar "+start_jar+" --nogui", file=f)
     print("sh-batファイルを作成しました")
 
 def main():
