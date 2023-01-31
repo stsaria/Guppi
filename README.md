@@ -12,7 +12,8 @@ Autoer! Codename: "Guppi"
 ## 説明
 
 *・* <a href="https://fss.zpw.jp/">FastServer</a> を Pythonで書いたプログラムです。<br>
-*・* CLI (Command Line Interface) ベースです。
+*・* CLI (Command Line Interface) ベースです。<br>
+*・* 対応バージョンは : **1.19.x 1.18.x 1.17.x 1.16.5** です
 
 ## 必要環境
 
