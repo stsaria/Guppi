@@ -3,7 +3,7 @@ import sys
 import datetime
 from thirdparty import const
 from src import etc_server
-import configparser
+import linecache
 import shutil
 
 new_version = "1.19.3"
@@ -23,7 +23,7 @@ class LocalJarFileClass:
     def __init__(self):
         self.install_jar_file = ""
 
-# 入力関数
+# 情報入力関数
 def input_server_info():
     name = input("サーバーの名前を入力してください：")
     while True:
@@ -70,8 +70,7 @@ def input_server_info():
             continue
         else:
             break
-    # server_add_or_one_more = input("作成方法を選んでください\nadd:すぐに作成する\nplural:もう一つ作成する\n（注意：未入力・それ以外の場合はaddになります）\n選択してください[A/p]：").lower()
-    server_add_or_one_more = "add"
+    server_add_or_one_more = input("作成方法を選んでください\nadd:すぐに作成する\nplural:もう一つ作成する\n（注意：未入力・それ以外の場合はaddになります）\n選択してください[A/p]：").lower()
     if not name:
         name = "デフォルト（未入力）"
     if not port or not str.isnumeric(port):
@@ -84,14 +83,14 @@ def input_server_info():
         return False, name, version, port, local_jar, local_jar_mode, local_jar_file
     else:
         return True, name, version, port, local_jar, local_jar_mode, local_jar_file
-#　作成関数
+# サーバー作成関数
 def make():
     print("\n作成モード")
     # サーバー作成　ループ処理
     server_count = 1
     while True:
         server = InputInfoClass()
-        # print(server_count,"個目")
+        print(server_count,"個目")
         input_choice = input_server_info()
         server.name = input_choice[1]
         server.version = input_choice[2]
@@ -99,6 +98,13 @@ def make():
         server.local_jar = input_choice[4]
         server.local_jar_mode = input_choice[5]
         server.local_jar_file = input_choice[6]
+        # 一時ファイル用ディレクトリ作成
+        if not os.path.exists("tmp"):
+            os.mkdir("tmp")
+
+        # 一時ファイルに入力情報を保存
+        with open("tmp/"+str(server_count)+".tmp", 'w', encoding="utf-8") as f:
+            print(server.name+"\n"+server.version+"\n"+server.port+"\n"+str(server.local_jar)+"\n"+str(server.local_jar_mode)+"\n"+server.local_jar_file, file=f)
         exec("server_"+str(server_count)+" = server")
         if input_choice[0]:
             break
@@ -114,9 +120,23 @@ def make():
         dt_now = datetime.datetime.now()
         const.minecraft_dir = "minecraft/minecraft-"+dt_now.strftime('%Y-%m-%d-%H-%M-%S-%f')
         os.mkdir(const.minecraft_dir)
+        # ここから廃止コード
         # execでclassの変数をserver_?をserverに格納
-        exec("server = server_"+str(i))
-        print(server.name)
+        # exec("server = server_"+str(i))
+        # ここまで
+
+        # サーバー変数にClassを格納
+        server = InputInfoClass()
+        # ここから サーバー変数各自に一時ファイルから取得した内容を格納
+        server.name = linecache.getline("tmp/"+str(i)+".tmp", 1).replace('\n', '')
+        server.version = linecache.getline("tmp/"+str(i)+".tmp", 2).replace('\n', '')
+        server.port = linecache.getline("tmp/"+str(i)+".tmp", 3).replace('\n', '')
+        server.local_jar = bool(linecache.getline("tmp/"+str(i)+".tmp", 4).replace('\n', ''))
+        server.local_jar_mode = int(linecache.getline("tmp/"+str(i)+".tmp", 5))
+        server.local_jar_file = linecache.getline("tmp/"+str(i)+".tmp", 6).replace('\n', '')
+        # ここまで
+        print("サーバー作成中（"+str(i)+"回目）")
+        # print(server.name)
         detailed_day = etc_server.setting_week_day_or_month(dt_now)
         if server.local_jar:
             local_jar = LocalJarFileClass()
@@ -182,6 +202,9 @@ def make():
         # サーバーディレクトリに管理用iniファイルを作成
         with open("data/"+const.minecraft_dir.replace('/', '-')+".txt", 'w', encoding="UTF-8") as f:
             print(server.version+"\n"+server.attribute+"\n"+server.start_jar_file, file=f)
+    # 終了作業
+    shutil.rmtree("tmp")
+
     print("インストールが終わりました\n管理（Control）から実行できます。")
 
 if __name__ == "__main__":

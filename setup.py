@@ -17,7 +17,7 @@ def check():
     #        print("Error!")
     #        print("\nError: File or directory does not exist\nNo folder or file found is => \n"+i)
     #        sys.exit(1)
-    print("OK!")
+    #print("OK!")
     # pathの内容がなかったら作成する系
     print("File Check 1",end="")
     path = ["data", "minecraft", "data/minecraft-list.txt", "data/minecraft-dir-list.txt"]
