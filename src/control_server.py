@@ -1,6 +1,7 @@
 from src import etc_server
 import sys
 import linecache
+from thirdparty import els
 
 def select_server():
     minecraft_server_list_txt_lines_count = sum([1 for _ in open('data/minecraft-list.txt', encoding="utf-8")])
@@ -87,9 +88,20 @@ def make_sh():
             print("echo Start!\njava -Xms"+mem_input[0]+"G -Xmx"+mem_input[1]+"G -jar "+start_jar+" --nogui", file=f)
     print("sh-batファイルを作成しました")
 
+def network_info():
+    network_info_select = etc_server.input_yes_no("\n注意：開く前に確認してください！\n今から開示する情報はIPアドレスなどの重要な情報です！（電話番号のようなものです）\nこの情報は使い方によってはサーバーなどを攻撃される可能性もあります。\n配信などでむやみに開くことは推奨されません！\nこの情報を開示する際には、状況や環境に気をつけてください！\n開示しますか？ `yes`もしくは`no`で選択してください。[Y/n]: ")
+    if not network_info_select:
+        return
+    global_ip = els.global_ip()
+    if not global_ip[1]:
+        global_ip[0] = "取得できません。"
+    print("プライベートIP (同じネットワークから参加する場合に必要です。)"+els.private_ip())
+    print("グローバルIP (外のネットワークから参加する場合に必要です。)"+global_ip[0])
+    input()
+
 def main():
     while True:
-        choice = input("\n管理モードを選択してください | Choose your management mode\n実行モード | runner mode（run）\nサーバーポート変更モード | edit server port mode（port）\nshとbatファイル作成モード | make sh file mode（sh or bat）\n戻る | Exit (exit)\n[R,P,S,B,E]：").lower()
+        choice = input("\n管理モードを選択してください | Choose your management mode\n実行モード | runner mode（run）\nサーバーポート変更モード | edit server port mode（port）\nshとbatファイル作成モード | make sh file mode（sh or bat）\nネットワークの情報確認モード(IP) | Network IP check (network)\n戻る | Exit (exit)\n[R,P,S,B,N,E]：").lower()
         if choice in ["run", "ru", "r"]:
             run()
         elif choice in["port", "por", "po", "p"]:
@@ -98,6 +110,8 @@ def main():
             make_sh()
         elif choice in["bat", "ba", "b"]:
             make_sh()
+        elif choice in["network", "networ", "netwo", "netw", "net", "ne", "n"]:
+            network_info()
         elif choice in["exit", "exi", "ex", "e"]:
             break
         else:

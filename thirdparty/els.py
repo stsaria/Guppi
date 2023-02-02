@@ -103,26 +103,26 @@ def check_ping(host, count_els):
                 pass
             return False
 # IP確認（192）
-def private_ip(host, port, print_switch):
+def private_ip():
         time.sleep(0.3)
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect((host, int(port)))
-        print_els("Private_IP: {0}".format(s.getsockname()[0]), print_switch)
+        s.connect(("8.8.8.8", 80))
+        print_els("Private_IP: {0}".format(s.getsockname()[0]), "False")
         time.sleep(1.7)
         return s.getsockname()[0]
 # G_IP確認
-def global_ip(error_stop_switch, print_switch):
+def global_ip():
     if platform.system() == "Windows":
         res = subprocess.run(["ping","google.com","-n","1", "-w", "300"],stdout=subprocess.PIPE)
         if res.returncode == 0 :
             time.sleep(0.3)
             g_ip = urllib.request.urlopen('http://api.ipify.org/').read().decode('utf-8')
-            print_els("Global_IP: {0}".format(g_ip), print_switch)
-            return g_ip
+            print_els("Global_IP: {0}".format(g_ip), "False")
+            return g_ip, True
         else:
-            print_els("[Error] failed to get", print_switch)
-            if error_stop_switch == "True":
-                print_els("Stops the program after 15 seconds", print_switch)
-                stop_15_sec(print_switch)
+            print_els("[Error] failed to get", "False")
+            if "False" == "True":
+                print_els("Stops the program after 15 seconds", "False")
+                stop_15_sec("False")
                 sys.exit()
-            return "error"
+            return "no", False
