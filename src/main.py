@@ -2,8 +2,12 @@ from src import make_server
 from src import control_server
 import sys
 
-version = "Pre/0.0.4-alpha.2"
+version = "Pre/0.0.4-alpha.3"
 codename = "Guppi"
+hitokoto_text = "今日はつかれた～、ちなみにDiscordとかリア友にバレたらめんどいよね\nさいあくううううううううううう"
+
+def hitokoto():
+    print(hitokoto_text)
 
 def run():
     print("Autoer! Name "+codename)
@@ -14,6 +18,8 @@ def run():
             make_server.make()
         elif choice in["control", "contro", "contr", "cont", "con", "co", "c"]:
             control_server.main()
+        elif choice in["blog", "blo", "bl", "b"]:
+            hitokoto()
         elif choice in["exit", "exi", "ex", "e"]:
             break
         else:

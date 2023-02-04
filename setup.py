@@ -5,8 +5,14 @@ import platform
 from src import etc_server
 from thirdparty import els
 import shutil
+import time
 
+autoer_text = ["----------------------------------------------\n|   ■■                                     ■■|", "|   ■■■             ■                      ■■|", "|   ■ ■            ■■                      ■■|", "|  ■  ■    ■   ■  ■■■■   ■■■    ■■■   ■ ■■ ■ |", "|  ■  ■    ■   ■   ■■   ■   ■  ■   ■  ■■   ■ |", "|  ■   ■   ■   ■   ■■   ■    ■ ■   ■■ ■    ■ |", "| ■■■■■■   ■   ■   ■■   ■    ■ ■■■■■■ ■    　|", "| ■    ■   ■   ■   ■■   ■    ■ ■      ■    　|", "| ■     ■  ■■  ■   ■■   ■   ■  ■   ■  ■    ■ |", "|■■     ■   ■■■■    ■■   ■■■    ■■■   ■    ■■|\n----------------------------------------------"]
 def check():
+    for i in autoer_text:
+        print(i)
+        time.sleep(0.1)
+
     print("チェック中")
     ## pathの内容がなかったらエラーを出す系
     #print("File Check 1",end="")
@@ -19,7 +25,7 @@ def check():
     #        sys.exit(1)
     #print("OK!")
     # pathの内容がなかったら作成する系
-    print("File Check 1",end="")
+    print("File Check",end="")
     path = ["data", "minecraft", "data/minecraft-list.txt", "data/minecraft-dir-list.txt"]
     path_attribute = ["dir", "dir", "file", "file"]
     for i in range(4):
@@ -54,7 +60,7 @@ def check():
         sys.exit(2)
     print(".OK!")
 
-    # Autoer!は3.10以上でないと実行できないから3.10未満だったら終了させる
+    # Autoer!はPython 3.10以上でないと実行できないから3.10未満だったら終了させる
     for i in range(4):
         i = i + 1
         need_version = '3.10'
