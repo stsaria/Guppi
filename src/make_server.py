@@ -37,7 +37,7 @@ def input_server_info():
             local_jar_mode = 1
             while True:
                 input_jar_file = input("ファイルのファイル場所＋/ファイルの名前を記入してください\n例[/home/solo/Desktop/server_jar/my_server_jar.jar]：")
-                if not os.file.exists(input_jar_file):
+                if not os.path.exists(input_jar_file):
                     print("ファイルが存在しません")
                     continue
                 local_jar_file = input_jar_file
