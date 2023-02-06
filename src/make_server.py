@@ -28,7 +28,7 @@ def input_server_info():
     name = input("サーバーの名前を入力してください：")
     while True:
         input_choice_text = "\n[Nでスキップできます。]サーバーのjarを持っている場合などではjarを読み込むことができます。\n例えば：Forgeをインストールしたい場合はM(mod)を選択してください。\n普通のjarファイル（spigotなど）を読み込む場合はY(Yes)を選択してください。"
-        #if ini['autoer_info']['language'] == "en-us": 
+        #if ini['autoer_info']['language'] == "en-us":
         #    input_choice_text = "[input `N` is skip]If you have the server jar you can load the jar file. \nFor example: If you want to install Forge, select M(mod). \nSelect Y (Yes) if you want to load a normal jar file (such as spigot)."
         choice = input(input_choice_text+"[Y/N/M]：").lower()
         # yes(普通ローカルjarモード)の動作

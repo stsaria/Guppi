@@ -2,16 +2,20 @@ from src import main
 import os
 import sys
 import platform
-from src import etc_server
 from thirdparty import els
 import shutil
 import time
+import platform
 
 autoer_text = ["----------------------------------------------\n|   ■■                                     ■■|", "|   ■■■             ■                      ■■|", "|   ■ ■            ■■                      ■■|", "|  ■  ■    ■   ■  ■■■■   ■■■    ■■■   ■ ■■ ■ |", "|  ■  ■    ■   ■   ■■   ■   ■  ■   ■  ■■   ■ |", "|  ■   ■   ■   ■   ■■   ■    ■ ■   ■■ ■    ■ |", "| ■■■■■■   ■   ■   ■■   ■    ■ ■■■■■■ ■    　|", "| ■    ■   ■   ■   ■■   ■    ■ ■      ■    　|", "| ■     ■  ■■  ■   ■■   ■   ■  ■   ■  ■    ■ |", "|■■     ■   ■■■■    ■■   ■■■    ■■■   ■    ■■|\n----------------------------------------------"]
-def check():
-    for i in autoer_text:
-        print(i)
-        time.sleep(0.1)
+def check(check, net):
+    if not check:
+        return
+
+    if platform.system() == "Windows":
+        for i in autoer_text:
+            print(i)
+            time.sleep(0.1)
 
     print("チェック中")
     ## pathの内容がなかったらエラーを出す系
@@ -40,18 +44,17 @@ def check():
                 f.close()
     print("OK!")
     # ネットにつながっているか（pingで）を確認する
-    print("Network Check",end="")
-    for i in range(3):
-        print(".",end="")
-        ping_result = els.check_ping("google.com","1")
-    if ping_result:
-        print("OK!")
-    if not ping_result:
-        print("Error!")
-        print("ネットワークに繋がっていません | NetWork Is Unavailable")
-        print("ネットに繋がっていない又はファイアーウォールなどで\n接続できない設定になっている可能性があります\nWifiなどの設定を見直す・ネットワーク管理者などに接続を許可する\nなどで解決してください。\nYou may not be connected to the internet or\nit may be set to not be able to connect due to a firewall\nReview the Wi-Fi settings or allow the network administrator to connect\n.")
-        if etc_server.input_yes_no("以上のことからこのまま続行するのは推奨されませんが\n続行することもできます\nただし、これによるサーバー作成の失敗などには責任は負いません\nFor the reasons above, we do not recommend continuing at this point. \nYou can continue\nHowever, we are not responsible for server creation failures caused by this. \n"):
-            print("-Pass-")
+    if net:
+        print("Network Check",end="")
+        for i in range(3):
+            print(".",end="")
+            ping_result = els.check_ping("google.com","1")
+        if ping_result:
+            print("OK!")
+        if not ping_result:
+            print("Error!")
+            print("ネットワークに繋がっていません | NetWork Is Unavailable")
+            sys.exit(2)
     # javaが導入されているか？（pathが通っているか）
     print("Java Path",end="")
     if shutil.which('java') == None:
@@ -73,10 +76,18 @@ if __name__ == "__main__":
     cmd_input = sys.argv
     if len(cmd_input) >= 2:
         if cmd_input[1] == "-notcheck":
-            pass
+            check_def = False
         else:
-            check()
+            check_def = True
     else:
-        check()
+        check_def = True
+    if len(cmd_input) >= 3:
+        if cmd_input[2, 3] == "-nonet":
+            net = False
+        else:
+            net = True
+    else:
+        net = True
+    check(check_def, net)
     print("Start!\n")
     main.run()

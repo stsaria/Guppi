@@ -126,3 +126,17 @@ def global_ip():
                 stop_15_sec("False")
                 sys.exit()
             return "no", False
+    else:
+        res = subprocess.run(["ping","google.com","-c","1"],stdout=subprocess.PIPE)
+        if res.returncode == 0 :
+            time.sleep(0.3)
+            g_ip = urllib.request.urlopen('http://api.ipify.org/').read().decode('utf-8')
+            print_els("Global_IP: {0}".format(g_ip), "False")
+            return g_ip, True
+        else:
+            print_els("[Error] failed to get", "False")
+            if "False" == "True":
+                print_els("Stops the program after 15 seconds", "False")
+                stop_15_sec("False")
+                sys.exit()
+            return "no", False
