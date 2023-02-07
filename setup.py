@@ -17,51 +17,49 @@ def check(check, net):
             print(i)
             time.sleep(0.1)
 
-    print("チェック中")
-    ## pathの内容がなかったらエラーを出す系
-    #print("File Check 1",end="")
+    print("チェック中-", end="", flush=True)
+    # pathの内容がなかったらエラーを出す系
+    # print("File Check 1",end="")
     #path = ["", "data/config.ini"]
     #for i in path:
-    #    print(".",end="")
+    # print(".",end="")
     #    if not os.path.exists(i):
-    #        print("Error!")
+    #        print("Error", end="")
     #        print("\nError: File or directory does not exist\nNo folder or file found is => \n"+i)
     #        sys.exit(1)
-    #print("OK!")
+    #print("OK-", end="")
     # pathの内容がなかったら作成する系
-    print("File Check",end="")
+    # print("File Check",end="")
     path = ["data", "minecraft", "data/minecraft-list.txt", "data/minecraft-dir-list.txt"]
     path_attribute = ["dir", "dir", "file", "file"]
     for i in range(4):
-        print(".",end="")
+        # print(".",end="")
         if not os.path.exists(path[i]):
-            print("-Create-",end="")
+            # print("-Create-",end="")
             if path_attribute[i] == "dir":
                 os.mkdir(path[i])
             if path_attribute[i] == "file":
                 f = open(path[i], 'w')
                 f.write('')
                 f.close()
-    print("OK!")
+    print("OK-", end="", flush=True)
     # ネットにつながっているか（pingで）を確認する
     if net:
-        print("Network Check",end="")
+        # print("Network Check",end="")
         for i in range(3):
-            print(".",end="")
+            # print(".",end="")
             ping_result = els.check_ping("google.com","1")
-        if ping_result:
-            print("OK!")
         if not ping_result:
-            print("Error!")
+            print("Error")
             print("ネットワークに繋がっていません | NetWork Is Unavailable")
             sys.exit(2)
     # javaが導入されているか？（pathが通っているか）
-    print("Java Path",end="")
+    # print("Java Path",end="")
     if shutil.which('java') == None:
-        print(".Error!")
+        print(".Error")
         print("Javaが導入されていないか\nPath(環境変数)が通っていない、可能性があります。")
         sys.exit(2)
-    print(".OK!")
+    print("OK-", end="", flush=True)
 
     # Autoer!はPython 3.10以上でないと実行できないから3.10未満だったら終了させる
     for i in range(4):
@@ -71,6 +69,7 @@ def check(check, net):
         if float(now_version) < float(need_version[0:i]):
             print(now_version)
             print("Error: Python versions prior to 3.10 are not available.")
+    print("OK", flush=True)
 
 if __name__ == "__main__":
     cmd_input = sys.argv
@@ -89,5 +88,5 @@ if __name__ == "__main__":
     else:
         net = True
     check(check_def, net)
-    print("Start!\n")
+    # print("Start!\n")
     main.run()

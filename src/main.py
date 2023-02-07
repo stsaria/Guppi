@@ -2,12 +2,14 @@ from src import make_server
 from src import control_server
 import sys
 
-version = "Pre/0.0.4-alpha.4"
+version = "Pre/0.0.5-alpha"
 codename = "Guppi"
 
 def run():
     print("Autoer! Name "+codename)
     print("Version "+version)
+    print("このプログラムは、まだ”アルファ版”です。\nなにか不具合があった場合には、GithubのIssueでお伝え下さい。")
+    print("Github : https://github.com/solothunder-autoer/Guppi")
     while True:
         choice = input("\nモードを選択してください | Specify mode\nサーバー作成モード | make mode（make）\nサーバー管理モード | control mode（control）\n終了 | Exit (exit) \n[M,C,E]：").lower()
         if choice in ["make", "mak", "ma", "m"]:
