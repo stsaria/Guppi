@@ -24,7 +24,7 @@ Autoer! Codename: "Guppi"
 
 Linuxでは基本的にファイルは、実行できないようになっています。<br>
 Linuxでは以下のコマンドを実行する、必要があります。<br>
-```sudo chmod ユーザー名 -R 777```
+```sudo chmod ./setup -R 777```
 
 ## 最短な使い方
 
