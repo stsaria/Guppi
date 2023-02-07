@@ -24,7 +24,8 @@ Autoer! Codename: "Guppi"
 
 Linuxでは基本的にファイルは、実行できないようになっています。<br>
 Linuxでは以下のコマンドを実行する、必要があります。<br>
-```sudo chmod ./setup -R 777```
+```sudo chmod -R 777 ./setup```<br>
+以上のコマンドはsetupファイル(Autoer!の)に、すべての実行できる、属性をつけるコマンドです。
 
 ## 最短な使い方
 
